@@ -12,26 +12,36 @@ export const WeatherApp = () => {
   }, []);
 
   useEffect(() => {
-    document.title = `Weather | ${weather?.location.name ?? ""}`;
+    document.title = `Weather | ${weather?.location?.name ?? ""}`;
   }, [weather]);
 
-  const loadInfo = async ({city = "venezuela"}) => {
+  const loadInfo = async (city = "cumana") => {
     try {
       const request = await fetch(
         `https://api.weatherapi.com/v1/current.json?aqi=no&key=a79c2eb522fa41e794c233206220707&q=${city}`
       );
+
+      if (request.status === 400) {
+        alert("Debe ingresar una ciudad existente");
+        window.location.reload();
+      }
 
       const json = await request.json();
 
       setTimeout(() => {
         setWeather(json);
       }, 1000);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleChangeCity = (city) => {
+  const handleChangeCity = async (city) => {
     setWeather(null);
-    loadInfo(city);
+    if (city.trim().length <= 1) city = "Cumana";
+    await loadInfo(city);
+    
+
   };
 
   return (

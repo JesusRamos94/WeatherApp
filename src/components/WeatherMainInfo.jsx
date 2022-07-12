@@ -1,5 +1,6 @@
 export const WeatherMainInfo = ({ weather }) => {
   return (
+    
     <div className="mainInfo">
       <div className="city">{weather?.location.name}</div>
       <div className="country">{weather?.location.country}</div>
@@ -28,6 +29,7 @@ export const WeatherMainInfo = ({ weather }) => {
         referrerpolicy="no-referrer-when-downgrade"
       ></iframe>
     </div>
+    
   );
 };
 
